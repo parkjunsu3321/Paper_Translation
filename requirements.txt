@@ -1,19 +1,7 @@
-# translation_model.py (Hugging Face / PyTorch + PDF)
-transformers>=4.36.0
-torch>=2.0.0
-# Table Transformer / AutoImageProcessor — torch와 버전 맞출 것(공식: pip install torch torchvision)
-torchvision>=0.15.0
-# Table Transformer 백본(DETR+timm) 등 — transformers가 선택적으로 요구
-timm>=0.9.0
-sentencepiece>=0.1.99
-protobuf>=4.21.0
-tiktoken>=0.5.0
-pypdf>=4.0.0
-pdfplumber>=0.11.0
-pymupdf>=1.23.0
-Pillow>=10.0.0
-# parser_model.py: HF Table Transformer(MIT)용 — torch/transformers와 중복 없음
-
-# glossary_sys.py (OpenAI API + DuckDuckGo 검색)
-openai>=1.40.0
-duckduckgo-search-api>=0.1.5
+docling
+openai>=1.0.0
+weasyprint
+Pillow
+pandas
+python-dotenv
+streamlit
