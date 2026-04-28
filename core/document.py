@@ -3,10 +3,9 @@ from io import BytesIO
 from typing import Callable
 
 from docling_core.types.doc import DocItemLabel, TableItem, PictureItem
-from openai import OpenAI
 
 from .styles import CSS
-from .translator import translate_text
+from .translator import TranslationConfig, translate_text
 
 
 HEADING_TAGS = {
@@ -42,7 +41,7 @@ def table_to_html(item: TableItem) -> str:
 
 def build_html(
     doc,
-    client: OpenAI,
+    translation_config: TranslationConfig,
     on_progress: Callable[[int, int, str], None] | None = None,
 ) -> str:
     parts = [
@@ -80,7 +79,7 @@ def build_html(
             if on_progress:
                 on_progress(translated, total, item.text[:50].replace("\n", " "))
 
-            korean = translate_text(client, item.text)
+            korean = translate_text(translation_config, item.text)
             korean = korean.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
             parts.append(f"<{tag}>{korean}</{tag}>")
 

@@ -3,20 +3,18 @@ from typing import Callable
 from docling.document_converter import DocumentConverter, PdfFormatOption
 from docling.datamodel.base_models import InputFormat
 from docling.datamodel.pipeline_options import PdfPipelineOptions
-from openai import OpenAI
 from weasyprint import HTML as WeasyHTML
 
 from .document import build_html
+from .translator import TranslationConfig
 
 
 def run_translation(
     source: str,
-    api_key: str,
+    translation_config: TranslationConfig,
     on_status: Callable[[str], None] | None = None,
     on_progress: Callable[[int, int, str], None] | None = None,
 ) -> tuple[bytes, str]:
-    client = OpenAI(api_key=api_key)
-
     pipeline_options = PdfPipelineOptions()
     pipeline_options.images_scale = 2.0
     pipeline_options.generate_page_images = False
@@ -35,7 +33,7 @@ def run_translation(
 
     if on_status:
         on_status("텍스트 번역 중 (이미지·표는 유지)...")
-    html = build_html(doc, client, on_progress=on_progress)
+    html = build_html(doc, translation_config, on_progress=on_progress)
 
     if on_status:
         on_status("PDF 생성 중...")
